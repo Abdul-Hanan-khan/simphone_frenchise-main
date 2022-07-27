@@ -245,6 +245,17 @@ class _AllSimsScreenState extends State<AllSimsScreen> {
                   onTap: () {
                     Nav.push(context, const AddSimScreen());
                   },
+                ),  ExpandableFabMenuItem(
+                  child: const Icon(Icons.sim_card, color: Colors.white),
+                  title: "Add Multiple Sims",
+                  titleColor: Colors.white,
+                  subtitle: "You can Add a more then one sims at a time",
+                  subTitleColor: Colors.white,
+                  backgroundColor: Colors.amber.shade700,
+                  onTap: () {
+                    // Nav.push(context, const AddSimScreen());
+                    /// show picker here
+                  },
                 ),
                 ExpandableFabMenuItem(
                   child: const Icon(Icons.wifi, color: Colors.white),

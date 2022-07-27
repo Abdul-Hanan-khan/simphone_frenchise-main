@@ -39,6 +39,16 @@ class AllPhoneApiResponse {
 }
 
 class Mobiles {
+
+  String? _id;
+  String? _deviceType;
+  String? _model;
+  String? _name;
+  String? _size;
+  int? _price;
+  List<String>? _pics;
+  int? _v;
+
   Mobiles({
       String? id, 
       String? deviceType, 
@@ -68,14 +78,7 @@ class Mobiles {
     _pics = json['pics'] != null ? json['pics'].cast<String>() : [];
     _v = json['__v'];
   }
-  String? _id;
-  String? _deviceType;
-  String? _model;
-  String? _name;
-  String? _size;
-  int? _price;
-  List<String>? _pics;
-  int? _v;
+
 
   String? get id => _id;
   String? get deviceType => _deviceType;

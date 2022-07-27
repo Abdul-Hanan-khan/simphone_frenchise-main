@@ -37,7 +37,6 @@ class Franchise {
     String? address,
   }) {
     _id = id;
-
     _name = name;
     _email = email;
     _phone = phone;

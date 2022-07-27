@@ -47,7 +47,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
           children: [
             ExpandableFabMenuItem(
               child: const Icon(Icons.sim_card, color: Colors.white),
-              title: "Add Sim",
+              title: "My Sims",
               titleColor: Colors.white,
               subtitle: "You can Add a sim",
               subTitleColor: Colors.white,
@@ -58,7 +58,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
             ),
             ExpandableFabMenuItem(
               child: const Icon(Icons.wifi, color: Colors.white),
-              title: "Add wifi devices",
+              title: "My wifi devices",
               titleColor: Colors.white,
               subtitle: "You Can add wifi devies in your account.",
               subTitleColor: Colors.white,
@@ -69,7 +69,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
             ),
             ExpandableFabMenuItem(
               child: const Icon(Icons.phone_android, color: Colors.white),
-              title: "Add Mobile",
+              title: "My Mobile",
               titleColor: Colors.white,
               subtitle: "You Can edit a group",
               subTitleColor: Colors.white,
