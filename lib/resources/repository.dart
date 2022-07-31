@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:sim_phone_captain/models/api_response/add_device_api_response.dart';
 import 'package:sim_phone_captain/models/api_response/add_new_sim_api_response.dart';
@@ -11,6 +13,7 @@ import 'package:sim_phone_captain/models/api_response/edit_sim_api_response.dart
 import 'package:sim_phone_captain/models/api_response/sign_in_api_response.dart';
 import 'package:sim_phone_captain/models/api_response/sign_up_api_response.dart';
 import 'package:sim_phone_captain/models/api_response/sim_packages_api_response.dart';
+import 'package:sim_phone_captain/resources/api_providers/add_bulk_sims_api.dart';
 import 'package:sim_phone_captain/resources/api_providers/add_device_post_api.dart';
 import 'package:sim_phone_captain/resources/api_providers/add_new_captain_post_api.dart';
 import 'package:sim_phone_captain/resources/api_providers/add_new_sim_post_api.dart';
@@ -21,6 +24,7 @@ import 'package:sim_phone_captain/resources/api_providers/captain_orders_get_api
 import 'package:sim_phone_captain/resources/api_providers/sim_delete_api.dart';
 import 'package:sim_phone_captain/resources/api_providers/user_get_api.dart';
 
+import '../models/api_response/add_bulk_sims_response.dart';
 import '../models/api_response/add_new_captain_api_response.dart';
 import '../models/api_response/all_captain_api_response.dart';
 import '../models/api_response/dashboard_api_response.dart';
@@ -51,6 +55,9 @@ class Repository {
 
   Future<AddNewSimApiResponse> addSim(Map data) async {
     return AddNewSimPostApi().addNewSimRequest(data);
+  }
+  Future<AddBulkSimsModal> addBulkSims(Map data, File file) async {
+    return AddBulkSimsApi().addBulkSimsRequest(data,file);
   }
 
   Future<AllSimApiResponse> allSim() async {

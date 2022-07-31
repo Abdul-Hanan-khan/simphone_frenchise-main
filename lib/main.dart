@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sim_phone_captain/bloc/all_phones_cubit/all_phones_cubit.dart';
+import 'package:sim_phone_captain/bloc/bulk_sim_bloc/bulk_sim_cubit.dart';
 import 'package:sim_phone_captain/bloc/drawer_cubit/drawer_cubit.dart';
 import 'package:sim_phone_captain/screens/splash.dart';
 
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           create: (context) => OrdersCubit(),
         ),
         BlocProvider(create: (context) => DashboardCubit(),
+        ),   BlocProvider(create: (context) => AddBulkSimsCubit(),
         ),
         BlocProvider(create: (context) => AllCaptainCubit(),
         ),

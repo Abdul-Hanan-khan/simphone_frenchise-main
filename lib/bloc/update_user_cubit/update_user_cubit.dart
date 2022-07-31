@@ -22,15 +22,30 @@ class UpdateUserCubit extends Cubit<UpdateUserState> {
   }) async {
     emit(LoadingState());
 
-    final _formData = FormData.fromMap({if (name != null) 'name': name, if (address != null) 'area': address, if (phone != null) 'phone': phone});
+    final _formData = FormData.fromMap({
+      if (name != null) 'name': name,
+      if (address != null) 'area': address,
+      if (phone != null) 'phone': phone
+    });
     if (profileImage != null) {
-      _formData.files.add(MapEntry('avatar', await MultipartFile.fromFile(profileImage.path.toString(), filename: 'cover_image_${DateTime.now().millisecondsSinceEpoch}.png',
-          contentType: MediaType("multipart", "form-data"))));
+      _formData.files.add(
+        MapEntry(
+          'avatar',
+          await MultipartFile.fromFile(
+            profileImage.path.toString(),
+            filename:
+                'cover_image_${DateTime.now().millisecondsSinceEpoch}.png',
+            contentType: MediaType("multipart", "form-data"),
+          ),
+        ),
+      );
     }
     print(_formData);
-    final UpdateUserApiResponse apiResponse = await repository.updateUser(_formData);
+    final UpdateUserApiResponse apiResponse =
+        await repository.updateUser(_formData);
     if (apiResponse.result == true) {
-      emit(SuccessfullyUpdateUser(apiResponse.message ?? "Successfully Update"));
+      emit(
+          SuccessfullyUpdateUser(apiResponse.message ?? "Successfully Update"));
     } else {
       emit(FailedToUpdateUser(apiResponse.message ?? "Failed To Update!"));
     }

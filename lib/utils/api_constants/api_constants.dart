@@ -6,6 +6,7 @@ class ApiConstants {
   static const String signUp = "$baseUrl/api/franchises";
   static const String login = "$baseUrl/api/auth/franchiseLogin";
   static const String addNewSim = "$baseUrl/api/sims";
+  static const String addBulkSim = "$baseUrl/api/sims/bulk";
   static const String allSims = "$baseUrl/api/sims/franchise/mine";
   static const String allWifiDevices = "$baseUrl/api/wifidevices";
   static const String allPhones = "$baseUrl/api/mobiles";

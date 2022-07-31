@@ -1,7 +1,13 @@
+import 'dart:io';
+
 import 'package:expandable_fab_menu/expandable_fab_menu.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:sim_phone_captain/bloc/bulk_sim_bloc/bulk_sim_cubit.dart';
+import 'package:sim_phone_captain/bloc/bulk_sim_bloc/bulk_sim_state.dart';
+import 'package:sim_phone_captain/resources/api_providers/add_bulk_sims_api.dart';
 import 'package:sim_phone_captain/screens/add_product/add_sim_screen/add_sim.dart';
 import 'package:sim_phone_captain/screens/add_product/edit_sim_screen.dart';
 import 'package:sim_phone_captain/ui_components/loading_screen_animation.dart';
@@ -77,7 +83,9 @@ class _AllSimsScreenState extends State<AllSimsScreen> {
                         ),
                         SlidableAction(
                           onPressed: (BuildContext context) {
-                            context.read<AllSimsCubit>().deleteSims(id: allSims[index].id.toString());
+                            context
+                                .read<AllSimsCubit>()
+                                .deleteSims(id: allSims[index].id.toString());
                           },
                           backgroundColor: Colors.deepOrange.shade600,
                           foregroundColor: Colors.white,
@@ -87,7 +95,8 @@ class _AllSimsScreenState extends State<AllSimsScreen> {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 16),
                       child: Column(
                         children: [
                           Row(
@@ -96,7 +105,8 @@ class _AllSimsScreenState extends State<AllSimsScreen> {
                               const Icon(Icons.sim_card),
                               Text(
                                 "${allSims[index].series} - ${allSims[index].no}",
-                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
@@ -108,7 +118,8 @@ class _AllSimsScreenState extends State<AllSimsScreen> {
                             children: [
                               const Text(
                                 "Price",
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                               Column(
                                 children: [
@@ -116,16 +127,23 @@ class _AllSimsScreenState extends State<AllSimsScreen> {
                                       ? Text(
                                           "${allSims[index].price} PKR",
                                           style: const TextStyle(
-                                              fontWeight: FontWeight.bold, color: Colors.orange, decoration: TextDecoration.lineThrough),
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.orange,
+                                              decoration:
+                                                  TextDecoration.lineThrough),
                                         )
                                       : Text(
                                           "${allSims[index].price} PKR",
-                                          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.orange),
                                         ),
                                   (allSims[index].discount != 0)
                                       ? Text(
                                           "${allSims[index].discountPrice} PKR",
-                                          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.orange),
                                         )
                                       : const SizedBox(),
                                 ],
@@ -135,76 +153,93 @@ class _AllSimsScreenState extends State<AllSimsScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          (allSims[index].package?.messages != null)?Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    "${allSims[index].package?.sameNetworkMins ?? 0}",
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
-                                  const Text(
-                                    "Onnet Mint",
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    "${allSims[index].package?.otherNetworkMins ?? 0}",
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
-                                  const Text(
-                                    "Offnet Mint",
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    "${allSims[index].package?.data ?? ""}",
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
-                                  const Text(
-                                    "MB's",
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ) : SizedBox(),
+                          (allSims[index].package?.messages != null)
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "${allSims[index].package?.sameNetworkMins ?? 0}",
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const Text(
+                                          "Onnet Mint",
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "${allSims[index].package?.otherNetworkMins ?? 0}",
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const Text(
+                                          "Offnet Mint",
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "${allSims[index].package?.data ?? ""}",
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const Text(
+                                          "MB's",
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(),
                           const SizedBox(
                             height: 20,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              (allSims[index].package?.messages != null) ? Column(
-                                children: [
-                                  Text(
-                                    "${allSims[index].package?.messages ?? ""}",
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
-                                  const Text(
-                                    "SMS",
-                                  ),
-                                ],
-                              ) :Column(
-                            children: [
-                              Text(
-                                "${allSims[index].package?.data ?? ""}",
-                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              const Text(
-                                "MB's",
-                              ),
-                            ],
-                          ),
+                              (allSims[index].package?.messages != null)
+                                  ? Column(
+                                      children: [
+                                        Text(
+                                          "${allSims[index].package?.messages ?? ""}",
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const Text(
+                                          "SMS",
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      children: [
+                                        Text(
+                                          "${allSims[index].package?.data ?? ""}",
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const Text(
+                                          "MB's",
+                                        ),
+                                      ],
+                                    ),
                               Column(
                                 children: [
                                   Text(
                                     allSims[index].package?.packageName ?? "",
-                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   const Text(
                                     "Package",
@@ -245,15 +280,33 @@ class _AllSimsScreenState extends State<AllSimsScreen> {
                   onTap: () {
                     Nav.push(context, const AddSimScreen());
                   },
-                ),  ExpandableFabMenuItem(
+                ),
+                ExpandableFabMenuItem(
                   child: const Icon(Icons.sim_card, color: Colors.white),
                   title: "Add Multiple Sims",
                   titleColor: Colors.white,
                   subtitle: "You can Add a more then one sims at a time",
                   subTitleColor: Colors.white,
                   backgroundColor: Colors.amber.shade700,
-                  onTap: () {
-                    // Nav.push(context, const AddSimScreen());
+                  onTap: () async {
+                    FilePickerResult? result =
+                        await FilePicker.platform.pickFiles();
+                    File file = File(result!.files.single.path!);
+
+                    print(result.files.single.path);
+
+                    // AddBulkSimsApi.uploadFileWithMultiPart(file: file);
+
+                    _showDialog();
+                    context.read<AddBulkSimsCubit>().addBulkSims(
+                        series: '0203',
+                        network: 'JazZ',
+                        price: '9000',
+                        simType: 'prepaid',
+                        numberType: 'GOLDEN',
+                        packageId: '628c9fab1afdf6668a0be9c3',
+                        file: file);
+
                     /// show picker here
                   },
                 ),
@@ -274,5 +327,60 @@ class _AllSimsScreenState extends State<AllSimsScreen> {
         );
       },
     );
+  }
+
+  _showDialog() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          content: StatefulBuilder(
+            builder: (context, setState) {
+              return BlocConsumer<AddBulkSimsCubit, AddBulkSimsState>(
+                listener: (context, state) {
+                  if (state is FailedToAddBulk) {
+                    showSnackBar(context, state.message);
+                    backScreen(context);
+                  }
+                  if (state is AddBulkSimsSuccessfully) {
+                    showSnackBar(context, state.message,
+                        type: SnackBarType.success);
+                    backScreen(context);
+                  }
+                },
+                builder: (context, state) {
+                  return Container(
+                      height: 150,
+                      width: 75,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Center(
+                        child: state is BulkLoadingState
+                            ? Column(
+                          mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  CircularProgressIndicator(color: Colors.green),
+                                  SizedBox(height: 15,),
+                                  Text('Uploading bulk')
+                                ],
+                              )
+                            : Container(),
+                      ));
+                },
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> backScreen(BuildContext context) async {
+    context.read<AllSimsCubit>().allSims();
+    Nav.pop(context);
   }
 }
