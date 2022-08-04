@@ -68,6 +68,7 @@ class _LoginState extends State<Login> {
                 resizeToAvoidBottomInset: false,
                 backgroundColor: Colors.white.withOpacity(0.8),
                 body: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
                   child: Stack(
                     children: [
                       Column(
