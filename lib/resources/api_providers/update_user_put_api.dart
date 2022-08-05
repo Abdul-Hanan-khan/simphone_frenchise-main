@@ -38,7 +38,7 @@ class UpdateUserPutApi {
 
 
   Future<UpdateUserApiResponse> updateUserRequest({String ?name,String ?address,String ?phone,XFile ?imageFile}) async {
-    Uri _uri=Uri.parse(ApiConstants.changeFranchiseInfo);
+    Uri _uri=Uri.parse(ApiConstants.updateUser);
     try {
       http.MultipartRequest request =  http.MultipartRequest("PUT", _uri);
       request.fields['name'] = name!;

@@ -44,9 +44,9 @@ import 'api_providers/sign_up_post_api.dart';
 import 'api_providers/update_user_put_api.dart';
 
 class Repository {
-  Future<SignUpApiResponse> signUp(Map data) {
+  Future<SignUpApiResponse> signUp({String ?name,String ?email,String ?phone,String ?password,String ?address,String ?lat,String ?long,XFile ?avatarFile,}) {
     final signUpPost = SignUpPostApi();
-    return signUpPost.signUpRequest(data);
+    return signUpPost.franchiseSignUpRequest(name: name,email: email,phone: phone,password: password,address: address,lat: lat,long: long,avatarFile: avatarFile);
   }
 
   Future<SignInApiResponse> signIn(Map data) {
