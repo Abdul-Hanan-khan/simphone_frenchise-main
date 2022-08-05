@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
    <application
-        android:label="sim_phone_captain"
+        android:label="sim_phone_franchise"
         android:name="${applicationName}"
         android:icon="@drawable/app_icon">
         <activity

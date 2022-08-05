@@ -289,8 +289,7 @@ class _AllSimsScreenState extends State<AllSimsScreen> {
                   subTitleColor: Colors.white,
                   backgroundColor: Colors.amber.shade700,
                   onTap: () async {
-                    FilePickerResult? result =
-                        await FilePicker.platform.pickFiles();
+                    FilePickerResult? result = await FilePicker.platform.pickFiles();
                     File file = File(result!.files.single.path!);
 
                     print(result.files.single.path);

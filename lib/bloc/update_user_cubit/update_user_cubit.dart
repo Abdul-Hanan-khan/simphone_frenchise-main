@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -42,7 +44,7 @@ class UpdateUserCubit extends Cubit<UpdateUserState> {
     }
     print(_formData);
     final UpdateUserApiResponse apiResponse =
-        await repository.updateUser(_formData);
+        await repository.updateUser(name: name,address: address,phone: phone,fileImage: profileImage);
     if (apiResponse.result == true) {
       emit(
           SuccessfullyUpdateUser(apiResponse.message ?? "Successfully Update"));
