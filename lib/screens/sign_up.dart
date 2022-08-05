@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sim_phone_captain/ui_components/loading_screen_animation.dart';
 
 import '../bloc/auth_cubit/signup_cubit/sign_up_cubit.dart';
 import '../common/common_variables.dart';
 import '../ui_components/show_snack_bar.dart';
+import '../utils/api_constants/api_constants.dart';
 import 'google_map_search.dart';
 
 class SignUp extends StatefulWidget {
@@ -24,6 +28,8 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _phoneTextController = TextEditingController();
   final TextEditingController _cnicTextController = TextEditingController();
 
+  XFile? _image;
+  String? profileImage;
   void onVisIconPressed() {
     setState(() {
       visibility = !visibility;
@@ -57,8 +63,21 @@ class _SignUpState extends State<SignUp> {
     super.initState();
   }
 
+
+  Future _imgFromGallery() async {
+    final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+
+    setState(() {
+      _image = image;
+      // fileImage=File(image!.path);
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
     Size size = MediaQuery.of(context).size;
     return BlocProvider(
       create: (context) => SignUpCubit(),
@@ -93,12 +112,55 @@ class _SignUpState extends State<SignUp> {
                           SizedBox(
                             height: size.height * 0.03,
                           ),
-                          Center(
-                            child: Text(
-                              "Please fill the following fields",
-                              style: TextStyle(fontSize: size.height * 0.03),
+                          Stack(children: [
+                            Center(
+                              child: Container(
+                                height: size.height * 0.2,
+                                width: size.width * 0.4,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white10,
+                                  // borderRadius: BorderRadius.circular(80),
+                                ),
+                                child: _image != null
+                                    ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: Image.file(
+                                    File(_image!.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                                    : ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: profileImage == null
+                                        ? Image.network(
+                                      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                                      fit: BoxFit.cover,
+                                    )
+                                        : Image.network(
+                                      "${ApiConstants.baseUrl}${profileImage!}",
+                                      fit: BoxFit.cover,
+                                    )),
+                              ),
                             ),
-                          ),
+                            Positioned(
+                                bottom: size.width * 0.01,
+                                right: size.width * 0.3,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _imgFromGallery();
+                                  },
+                                  child: Container(
+                                    height: size.height * 0.04,
+                                    width: size.height * 0.04,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.green,
+                                    ),
+                                    child: const Icon(Icons.edit),
+                                  ),
+                                ))
+                          ]),
                           SizedBox(
                             height: size.height * 0.03,
                           ),
@@ -431,27 +493,60 @@ class _SignUpState extends State<SignUp> {
                                 } else if (_phoneTextController.text.isEmpty) {
                                   showSnackBar(context, "Please Enter Phone No");
                                 } else {
-                                  if (registrationAddress.isNotEmpty) {
-                                    context.read<SignUpCubit>().signUp(
-                                          franchiseName: _nameTextController.text,
-                                          password: _passwordTextController.text,
-                                          email: _emailTextController.text,
-                                          phoneNo: _phoneTextController.text,
-                                          address: registrationAddress,
-                                          lat: lat.toString(),
-                                          long: long.toString(),
-                                        );
-                                  } else {
-                                    context.read<SignUpCubit>().signUp(
-                                          franchiseName: _nameTextController.text,
-                                          password: _passwordTextController.text,
-                                          email: _emailTextController.text,
-                                          phoneNo: _phoneTextController.text,
-                                          address: currentRegistrationAddress,
-                                          lat: currentLat.toString(),
-                                          long: currentLong.toString(),
-                                        );
+                                  if(_image !=null){
+                                    /// with avatar
+                                    if (registrationAddress.isNotEmpty) {
+                                      context.read<SignUpCubit>().signUp(
+                                        franchiseName: _nameTextController.text,
+                                        password: _passwordTextController.text,
+                                        email: _emailTextController.text,
+                                        phoneNo: _phoneTextController.text,
+                                        address: registrationAddress,
+                                        lat: lat.toString(),
+                                        long: long.toString(),
+                                        avatarImage: _image
+
+                                      );
+                                    } else {
+                                      context.read<SignUpCubit>().signUp(
+                                        franchiseName: _nameTextController.text,
+                                        password: _passwordTextController.text,
+                                        email: _emailTextController.text,
+                                        phoneNo: _phoneTextController.text,
+                                        address: currentRegistrationAddress,
+                                        lat: currentLat.toString(),
+                                        long: currentLong.toString(),
+                                        avatarImage: _image
+                                      );
+                                    }
+                                  }else{
+                                    /// without avatar
+                                    if (registrationAddress.isNotEmpty) {
+                                      context.read<SignUpCubit>().signUp(
+                                        franchiseName: _nameTextController.text,
+                                        password: _passwordTextController.text,
+                                        email: _emailTextController.text,
+                                        phoneNo: _phoneTextController.text,
+                                        address: registrationAddress,
+                                        lat: lat.toString(),
+                                        long: long.toString(),
+
+                                      );
+                                    } else {
+                                      context.read<SignUpCubit>().signUp(
+                                        franchiseName: _nameTextController.text,
+                                        password: _passwordTextController.text,
+                                        email: _emailTextController.text,
+                                        phoneNo: _phoneTextController.text,
+                                        address: currentRegistrationAddress,
+                                        lat: currentLat.toString(),
+                                        long: currentLong.toString(),
+                                      );
+                                    }
                                   }
+
+
+
                                 }
                               },
                               child: Padding(
