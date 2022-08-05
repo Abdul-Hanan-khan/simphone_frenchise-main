@@ -45,9 +45,11 @@ class UpdateUserPutApi {
       request.fields['address'] = address!;
       request.fields['phone'] = phone!;
 
-      http.MultipartFile multipartFile = await http.MultipartFile.fromPath('avatar', imageFile!.path, );
-      request.files.add(multipartFile);
-      print(multipartFile);
+      if(imageFile != null){
+        http.MultipartFile multipartFile = await http.MultipartFile.fromPath('avatar', imageFile.path, );
+        request.files.add(multipartFile);
+        print(multipartFile);
+      }
       request.headers.addAll({
         'Content-Type': 'multipart/form-data',
         'Accept': '*/*',
