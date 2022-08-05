@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sim_phone_captain/models/api_response/add_device_api_response.dart';
 import 'package:sim_phone_captain/models/api_response/add_new_sim_api_response.dart';
 import 'package:sim_phone_captain/models/api_response/all_devices_api_response.dart';
@@ -116,8 +117,8 @@ class Repository {
     return DashboardGetApi().getDashboardRequest();
   }
 
-  Future<UpdateUserApiResponse> updateUser(FormData data) async {
-    return UpdateUserPutApi().updateUserRequest(data);
+  Future<UpdateUserApiResponse> updateUser({String? name,String? address, String ? phone, XFile ?fileImage}) async {
+    return UpdateUserPutApi().updateUserRequest(name: name,address: address,phone: phone,  imageFile: fileImage);
   }
 
   Future<AddNewCaptainApiResponse> addNewCaptain(Map data) async {

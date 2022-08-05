@@ -29,12 +29,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   XFile? _image;
   String? profileImage;
   int isCurrentAddress = 0;
-
+  File? fileImage;
   Future _imgFromGallery() async {
     final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 50);
 
+
     setState(() {
       _image = image;
+       fileImage=File(image!.path);
+
     });
   }
 

@@ -24,4 +24,5 @@ class ApiConstants {
   static const String updateUser = "$baseUrl/api/users/chnageUser";
   static const String addNewCaptain = "$baseUrl/api/users/captain";
   static const String allCaptain = "$baseUrl/api/franchises/captainsActive";
+  static const String changeFranchiseInfo = "$baseUrl/api/franchises/changeFranchise";
 }
