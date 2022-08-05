@@ -42,7 +42,7 @@ class UpdateUserPutApi {
     try {
       http.MultipartRequest request =  http.MultipartRequest("PUT", _uri);
       request.fields['name'] = name!;
-      request.fields['area'] = address!;
+      request.fields['address'] = address!;
       request.fields['phone'] = phone!;
 
       http.MultipartFile multipartFile = await http.MultipartFile.fromPath('avatar', imageFile!.path, );
